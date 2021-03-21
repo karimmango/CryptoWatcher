@@ -1,5 +1,10 @@
 import 'package:crypto_watcher/coinRepository.dart';
+import 'package:crypto_watcher/homepageBloc.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:yeet/yeet.dart';
 
 // ignore: camel_case_types
 class homepage extends StatelessWidget {
@@ -52,9 +57,10 @@ class homepage extends StatelessWidget {
 
 const horizontalPadding = SizedBox(width: 16);
 
-class FeedWidget extends StatelessWidget {
+class FeedWidget extends HookWidget {
   @override
   Widget build(BuildContext context) {
+    final state = useProvider(homePageBlocProvider.state);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -68,27 +74,19 @@ class FeedWidget extends StatelessWidget {
           'Latest Price Action for Coins You are Tracking',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        StreamBuilder<List<Coin>>(
-          stream: CoinRepository().watchAllCoins(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
-            }
-            final data = snapshot.data;
-            if (data != null) {
-              return Column(
-                children: data.map((e) => CoinWidget(coin: e)).toList(),
-              );
-            }
-            return Text('Unexpected Error!');
-          },
-        )
+        SizedBox(height: 16),
+        if (state.isLoading)
+          CircularProgressIndicator()
+        else
+          Column(
+            children: state.coins.map((e) => CoinWidget(coin: e)).toList(),
+          ),
       ],
     );
   }
 }
 
-class CoinWidget extends StatelessWidget {
+class CoinWidget extends HookWidget {
   final Coin coin;
 
   const CoinWidget({
@@ -97,8 +95,9 @@ class CoinWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final homePageBloc = useProvider(homePageBlocProvider);
     return ConstrainedBox(
-      constraints: BoxConstraints(maxWidth: 500),
+      constraints: BoxConstraints(maxWidth: 2000),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10.0),
         child: Card(
@@ -112,7 +111,13 @@ class CoinWidget extends StatelessWidget {
                   CircleAvatar(
                       backgroundImage: AssetImage(coin.path), radius: 16),
                   horizontalPadding,
-                  Text(coin.name),
+                  RichText(
+                    text: TextSpan(
+                      text: coin.name,
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () => context.yeet('/coin'),
+                    ),
+                  ),
                   Spacer(),
                   Text('\$' + coin.price.toString()),
                   Spacer(),

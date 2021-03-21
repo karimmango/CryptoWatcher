@@ -1,3 +1,5 @@
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 class Coin {
   String name;
   double price;
@@ -49,3 +51,7 @@ class CoinRepository implements coinRepository {
     }
   }
 }
+
+final coinRepositoryProvider = Provider<coinRepository>((ref) {
+  return CoinRepository();
+});
