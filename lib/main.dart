@@ -1,3 +1,4 @@
+import 'package:crypto_watcher/analysis.dart';
 import 'package:crypto_watcher/coin.dart';
 import 'package:crypto_watcher/homepage.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,7 @@ final yeetProvider = Provider<Yeet>((ref) {
             path: '/coin',
             builder: (_, __) => coin(),
           ),
+          Yeet(path: '/analysis', builder: (_, __) => WebPageView()),
         ],
       ),
     ],

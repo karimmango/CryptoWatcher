@@ -10,7 +10,6 @@ import 'package:yeet/yeet.dart';
 class homepage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    int _selectedIndex = 0;
     return Scaffold(
         appBar: AppBar(
           title: Text(
@@ -49,7 +48,6 @@ class homepage extends StatelessWidget {
               label: 'Charting and Analysis',
             ),
           ],
-          currentIndex: _selectedIndex,
           selectedItemColor: Colors.amber[800],
         ));
   }
@@ -69,6 +67,10 @@ class FeedWidget extends HookWidget {
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 16),
+        ElevatedButton(
+          onPressed: () => context.yeet('/analysis'),
+          child: Text('to'),
+        ),
         Image.asset('assets/images/btc-chart.png'),
         Text(
           'Latest Price Action for Coins You are Tracking',
@@ -100,24 +102,19 @@ class CoinWidget extends HookWidget {
       constraints: BoxConstraints(maxWidth: 2000),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10.0),
-        child: Card(
-          elevation: 5,
-          child: Column(
-            children: [
-              SizedBox(height: 16),
-              Row(
+        child: InkWell(
+          onTap: () => context.yeet('/coin'),
+          child: Card(
+            elevation: 5,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
                 children: [
                   horizontalPadding,
                   CircleAvatar(
                       backgroundImage: AssetImage(coin.path), radius: 16),
                   horizontalPadding,
-                  RichText(
-                    text: TextSpan(
-                      text: coin.name,
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () => context.yeet('/coin'),
-                    ),
-                  ),
+                  Text(coin.name),
                   Spacer(),
                   Text('\$' + coin.price.toString()),
                   Spacer(),
@@ -125,7 +122,7 @@ class CoinWidget extends HookWidget {
                   horizontalPadding,
                 ],
               ),
-            ],
+            ),
           ),
         ),
       ),
