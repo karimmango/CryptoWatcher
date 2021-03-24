@@ -1,24 +1,20 @@
-class crypto {
-  String name;
-  String symbol;
-  double price;
-  double volume24H;
-  double percentChange1H;
-  double percentChange24H;
-  double percentChange7D;
-  double marketCap;
-  DateTime lastUpdated;
-  crypto({
-    required this.name,
-    required this.symbol,
-    required this.price,
-    required this.volume24H,
-    required this.percentChange1H,
-    required this.percentChange24H,
-    required this.percentChange7D,
-    required this.marketCap,
-    required this.lastUpdated,
-  });
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'crypto.freezed.dart';
+
+@freezed
+abstract class crypto with _$crypto {
+  const factory crypto({
+    required String name,
+    required String symbol,
+    required double price,
+    required double volume24H,
+    required double percentChange1H,
+    required double percentChange24H,
+    required double percentChange7D,
+    required double marketCap,
+    required DateTime lastUpdated,
+  }) = _crypto;
 
   factory crypto.fromJson(Map<String, dynamic> json) => crypto(
         name: json["name"] == null ? null : json["name"],
