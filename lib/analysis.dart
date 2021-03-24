@@ -20,7 +20,8 @@ class _WebPageViewState extends State<WebPageView> {
   @override
   Widget build(BuildContext context) {
     return WebView(
-        initialUrl: "https://tradingview.com/",
+        initialUrl:
+            "https://www.tradingview.com/chart/?symbol=BITSTAMP%3ABTCUSD",
         javascriptMode: JavascriptMode.unrestricted,
         onWebViewCreated: (WebViewController webViewController) {
           _controler.complete(webViewController);
