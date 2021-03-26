@@ -13,29 +13,6 @@ class Coin {
   }
 }
 
-class Crypto {
-  String name;
-  String symbol;
-  double price;
-  double volume24H;
-  double percentChange1H;
-  double percentChange24H;
-  double percentChange7D;
-  double marketCap;
-  DateTime lastUpdated;
-  Crypto({
-    required this.name,
-    required this.symbol,
-    required this.price,
-    required this.volume24H,
-    required this.percentChange1H,
-    required this.percentChange24H,
-    required this.percentChange7D,
-    required this.marketCap,
-    required this.lastUpdated,
-  });
-}
-
 // ignore: camel_case_types
 abstract class coinRepository {
   Future<List<Coin>> getAllFollowedCoins();
