@@ -71,6 +71,18 @@ class FeedWidget extends HookWidget {
         style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
       ),
       SizedBox(height: 16),
+      TextField(
+        onChanged: (value) {
+          coinBloc.coinContentChanged(value);
+        },
+        decoration:
+            InputDecoration(hintText: 'Search for a coin by its symbol'),
+      ),
+      IconButton(
+          icon: Icon(Icons.send),
+          onPressed: () {
+            coinBloc.addCoinButtonPressed(state.newCoin);
+          }),
       if (state.coins.isEmpty)
         CircularProgressIndicator()
       else

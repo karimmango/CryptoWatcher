@@ -25,15 +25,13 @@ final yeetProvider = Provider<Yeet>((ref) {
   return authState.maybeWhen(
     authenticated: (user) => Yeet(
       children: [
-        Yeet(
-          path: '/',
-          builder: (_, __) => homepage(),
-        ),
+        Yeet(path: '/', builder: (_, __) => homepage(), children: [
+          Yeet(
+            path: '/info/:id([A-Z]{3})',
+            builder: (params, __) => coin_info(params['id']!),
+          ),
+        ]),
         Yeet(path: '/portfolio', builder: (_, __) => owned_coins()),
-        Yeet(
-          path: '/info/:id([A-Z]{3})',
-          builder: (params, __) => coin_info(params['id']!),
-        ),
       ],
     ),
     orElse: () => Yeet(

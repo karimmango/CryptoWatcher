@@ -14,8 +14,7 @@ class coin_info extends HookWidget {
     final coinBloc = useProvider(coinBlocProvider);
     return Scaffold(
         appBar: AppBar(
-          title: Text(
-              'Crypto Watcher App                  Your Holdings: \$60,000'),
+          title: Text('Crypto Watcher App'),
         ),
         body: LayoutBuilder(
           builder: (context, constraints) {
@@ -28,7 +27,6 @@ class coin_info extends HookWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: 36),
-                    Text('here'),
                     FeedWidget(this.id),
                   ],
                 ),
@@ -64,11 +62,9 @@ class FeedWidget extends HookWidget {
   Widget build(BuildContext context) {
     final coinBloc = useProvider(coinBlocProvider);
     final state = useProvider(coinBlocProvider.state);
-    final listOfCoins = state.coins.toList();
-    coinBloc.getCoinInfo(this.id);
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text(
-        'Tasdfasdfsadfasdfsadfsadfsfaadafafdsfaafsd',
+        'Details about the coin',
         style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
       ),
       Column(children: [CoinWidget(coin: state.info_coin)]),
@@ -77,30 +73,6 @@ class FeedWidget extends HookWidget {
 }
 
 const horizontalPadding = SizedBox(width: 16);
-
-// class CoinInfoWidget extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: [
-//         Text(
-//           'Bitcoin details',
-//           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-//         ),
-//         SizedBox(height: 16),
-//         CoinWidget(
-//           coin: state.info_coin,
-//         ),
-//         Text(
-//           'Bitcoin price chart',
-//           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-//         ),
-//         Image.asset('assets/images/bit.png'),
-//       ],
-//     );
-//   }
-// }
 
 class CoinWidget extends HookWidget {
   final crypto coin;
@@ -128,6 +100,8 @@ class CoinWidget extends HookWidget {
                   Text('\$' + coin.price),
                   Spacer(),
                   Text(coin.symbol),
+                  Spacer(),
+                  Text(coin.circulating_supply),
                   horizontalPadding,
                 ],
               ),

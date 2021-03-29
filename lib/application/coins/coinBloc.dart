@@ -49,8 +49,10 @@ class CoinBloc extends StateNotifier<CoinState> {
   }
 
   void getCoinInfo(String ids) async {
-    var x = await coin_repo.coinService.getCurrencies(ids);
-    state.copyWith(info_coin: x[0]);
+    var x = await coin_repo.getCoinInfo(ids);
+    print(x);
+    state = state.copyWith(info_coin: x);
+    print(state.info_coin);
   }
 }
 

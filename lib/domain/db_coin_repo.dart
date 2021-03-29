@@ -61,7 +61,7 @@ class Coin_Repo {
       final coins = await coinService.getCurrencies(ids);
       //state = state.copyWith(portfolio_value: sum);
       yield coins;
-      await Future.delayed(Duration(seconds: 4));
+      await Future.delayed(Duration(seconds: 15));
     }
   }
 
@@ -79,6 +79,13 @@ class Coin_Repo {
     return coins;
   }
 
+  Future<crypto> getCoinInfo(String ids) async {
+    //print(ids);
+    final coins = await coinService.getCurrencies(ids);
+    //print(coins.toString());
+    return coins[0];
+  }
+
   Stream<List<crypto>> watchAllCoins() async* {
     var coins = <crypto>[];
     //print('hi');
@@ -93,34 +100,7 @@ class Coin_Repo {
       i++;
     }
   }
-
-//   Stream<List<dynamic>> watchPosts() async* {
-//     var x = firestore
-//         .collection('users')
-//         .doc('Do1S8nVnMaefj9vS164Y')
-//         .snapshots()
-//         .map((value) =>
-//             coinService.getCurrencies(value['CoinsTracked'].join(',')))
-
-//   }
 }
-
-//   Stream<List<String>> watchCoins(String username) {
-//     var doc = firestore.collection('users').doc(username);
-//     List<String> c = doc.get("CoinsTracked") as List<String>;
-//     return firestore
-//         .collection('posts')
-//         .orderBy('created_at', descending: true)
-//         .limit(10)
-//         .snapshots()
-//         .map((snapshot) => snapshot.docs
-//             .map((doc) => Post(
-//                   authorName: doc['author_name'],
-//                   content: doc['content'],
-//                 ))
-//             .toList());
-//   }
-// }
 
 final coinRepoProvider = Provider<Coin_Repo>((ref) {
   final firestore = ref.watch(firestoreProvider);

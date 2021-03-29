@@ -62,10 +62,6 @@ class FeedWidget extends HookWidget {
     final state = useProvider(coinBlocProvider.state);
     final listOfCoins = state.coins.toList();
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text(
-        'Total Cryptocurrency Market Cap',
-        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-      ),
       SizedBox(height: 16),
       ElevatedButton(
         onPressed: () => context.yeet('/portfolio'),
@@ -108,6 +104,7 @@ class CoinWidget extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final state = useProvider(coinBlocProvider.state);
+    final coinBloc = useProvider(coinBlocProvider);
     return ConstrainedBox(
       constraints: BoxConstraints(maxWidth: 2000),
       child: Padding(
@@ -117,6 +114,7 @@ class CoinWidget extends HookWidget {
             context.yeet(
               '/info/' + coin.id,
             ),
+            coinBloc.getCoinInfo(coin.id)
           },
           child: Card(
             elevation: 5,
