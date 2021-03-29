@@ -20,7 +20,7 @@ class AuthView extends HookWidget {
             loading: () => Center(child: CircularProgressIndicator()),
             authenticated: (user) {
               Future.delayed(Duration(milliseconds: 300)).then((_) {
-                context.yeet('/coin');
+                context.yeet('/');
               });
               return Center(child: Text('Welcome ${user.id}'));
             },

@@ -13,11 +13,18 @@ abstract class crypto with _$crypto {
     required String name,
     required String symbol,
     required String price,
+    required String circulating_supply,
+    //required String max_supply,
+    //required String logo_url,
   }) = _crypto;
 
   factory crypto.fromJson(Map<String, dynamic> json) => crypto(
-      id: json["id"],
-      name: json["name"],
-      symbol: json["symbol"],
-      price: json["price"]);
+        id: json["id"],
+        name: json["name"],
+        symbol: json["symbol"],
+        price: json["price"],
+        circulating_supply: json["circulating_supply"],
+        //max_supply: json["max_supply"],
+        //logo_url: json["logo_url"],
+      );
 }

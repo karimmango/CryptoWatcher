@@ -24,12 +24,14 @@ class _$cryptoTearOff {
       {required String id,
       required String name,
       required String symbol,
-      required String price}) {
+      required String price,
+      required String circulating_supply}) {
     return _crypto(
       id: id,
       name: name,
       symbol: symbol,
       price: price,
+      circulating_supply: circulating_supply,
     );
   }
 
@@ -47,6 +49,7 @@ mixin _$crypto {
   String get name => throw _privateConstructorUsedError;
   String get symbol => throw _privateConstructorUsedError;
   String get price => throw _privateConstructorUsedError;
+  String get circulating_supply => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -57,7 +60,12 @@ mixin _$crypto {
 abstract class $cryptoCopyWith<$Res> {
   factory $cryptoCopyWith(crypto value, $Res Function(crypto) then) =
       _$cryptoCopyWithImpl<$Res>;
-  $Res call({String id, String name, String symbol, String price});
+  $Res call(
+      {String id,
+      String name,
+      String symbol,
+      String price,
+      String circulating_supply});
 }
 
 /// @nodoc
@@ -74,6 +82,7 @@ class _$cryptoCopyWithImpl<$Res> implements $cryptoCopyWith<$Res> {
     Object? name = freezed,
     Object? symbol = freezed,
     Object? price = freezed,
+    Object? circulating_supply = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -92,6 +101,10 @@ class _$cryptoCopyWithImpl<$Res> implements $cryptoCopyWith<$Res> {
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as String,
+      circulating_supply: circulating_supply == freezed
+          ? _value.circulating_supply
+          : circulating_supply // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -101,7 +114,12 @@ abstract class _$cryptoCopyWith<$Res> implements $cryptoCopyWith<$Res> {
   factory _$cryptoCopyWith(_crypto value, $Res Function(_crypto) then) =
       __$cryptoCopyWithImpl<$Res>;
   @override
-  $Res call({String id, String name, String symbol, String price});
+  $Res call(
+      {String id,
+      String name,
+      String symbol,
+      String price,
+      String circulating_supply});
 }
 
 /// @nodoc
@@ -119,6 +137,7 @@ class __$cryptoCopyWithImpl<$Res> extends _$cryptoCopyWithImpl<$Res>
     Object? name = freezed,
     Object? symbol = freezed,
     Object? price = freezed,
+    Object? circulating_supply = freezed,
   }) {
     return _then(_crypto(
       id: id == freezed
@@ -137,6 +156,10 @@ class __$cryptoCopyWithImpl<$Res> extends _$cryptoCopyWithImpl<$Res>
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as String,
+      circulating_supply: circulating_supply == freezed
+          ? _value.circulating_supply
+          : circulating_supply // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -149,7 +172,8 @@ class _$_crypto implements _crypto {
       {required this.id,
       required this.name,
       required this.symbol,
-      required this.price});
+      required this.price,
+      required this.circulating_supply});
 
   factory _$_crypto.fromJson(Map<String, dynamic> json) =>
       _$_$_cryptoFromJson(json);
@@ -162,10 +186,12 @@ class _$_crypto implements _crypto {
   final String symbol;
   @override
   final String price;
+  @override
+  final String circulating_supply;
 
   @override
   String toString() {
-    return 'crypto(id: $id, name: $name, symbol: $symbol, price: $price)';
+    return 'crypto(id: $id, name: $name, symbol: $symbol, price: $price, circulating_supply: $circulating_supply)';
   }
 
   @override
@@ -179,7 +205,10 @@ class _$_crypto implements _crypto {
             (identical(other.symbol, symbol) ||
                 const DeepCollectionEquality().equals(other.symbol, symbol)) &&
             (identical(other.price, price) ||
-                const DeepCollectionEquality().equals(other.price, price)));
+                const DeepCollectionEquality().equals(other.price, price)) &&
+            (identical(other.circulating_supply, circulating_supply) ||
+                const DeepCollectionEquality()
+                    .equals(other.circulating_supply, circulating_supply)));
   }
 
   @override
@@ -188,7 +217,8 @@ class _$_crypto implements _crypto {
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(symbol) ^
-      const DeepCollectionEquality().hash(price);
+      const DeepCollectionEquality().hash(price) ^
+      const DeepCollectionEquality().hash(circulating_supply);
 
   @JsonKey(ignore: true)
   @override
@@ -206,7 +236,8 @@ abstract class _crypto implements crypto {
       {required String id,
       required String name,
       required String symbol,
-      required String price}) = _$_crypto;
+      required String price,
+      required String circulating_supply}) = _$_crypto;
 
   factory _crypto.fromJson(Map<String, dynamic> json) = _$_crypto.fromJson;
 
@@ -218,6 +249,8 @@ abstract class _crypto implements crypto {
   String get symbol => throw _privateConstructorUsedError;
   @override
   String get price => throw _privateConstructorUsedError;
+  @override
+  String get circulating_supply => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$cryptoCopyWith<_crypto> get copyWith => throw _privateConstructorUsedError;

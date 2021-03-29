@@ -1,28 +1,43 @@
 // import 'package:crypto_watcher/crypto.dart';
-// import 'package:crypto_watcher/domain/coinRepo.dart';
+// import 'package:crypto_watcher/domain/db_coin_repo.dart';
 // import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // import 'coin_state.dart';
+// import 'domain/coinRepo.dart';
 
-// class CoinBloc extends StateNotifier<CoinState> {
-//   // ignore: non_constant_identifier_names
-//   final coinRepo coin_repo;
-//   CoinBloc(this.coin_repo) : super(CoinState.noCoin());
+// class Coin_Bloc extends StateNotifier<CoinState> {
+//   final Coin_Repo coin_reposi;
 
-//   Future<void> getCoinPressed(String ids) async {
-//     state = CoinState.loading();
-//     final crypto coin = await coin_repo.getCoins(ids);
-//     print(coin);
-//     state = CoinState.hasCoin(coin: coin);
-//   }
-//   void coinContentChanged(String content) {
-//     state = state.;
+//   Coin_Bloc(List<crypto> coins, this.coin_reposi)
+//       : super(CoinState(coins: coins, newCoin: ''));
+
+//   void addCoinContentChanged(String content) {
+//     state = state.copyWith(newCoin: content);
 //   }
 
+//   void postButtonPressed() {
+//     coin_reposi.coinTracked('user', state.newCoin);
+//   }
 // }
 
-// final coinBlocProvider = StateNotifierProvider<CoinBloc>((ref) {
-//   // ignore: non_constant_identifier_names
-//   final coin_repo = ref.watch(coinRepoProvider);
-//   return CoinBloc(coin_repo);
+// final postsStreamProvider = StreamProvider<List<crypto>>((ref) {
+//   final coin_reposi = ref.watch(coinRepoProvider);
+//   // return coin_repo.watchPosts();
+//   return;
+// });
+
+// final postsBlocProvider = StateNotifierProvider<PostsBloc>((ref) {
+//   final postsRepo = ref.watch(postsRepoProvider);
+//   final posts = ref.watch(postsStreamProvider);
+//   return posts.when(
+//     data: (data) {
+//       print(data);
+//       return PostsBloc(data, postsRepo);
+//     },
+//     loading: () => PostsBloc([], postsRepo),
+//     error: (e, __) {
+//       print(e);
+//       return PostsBloc([], postsRepo);
+//     },
+//   );
 // });

@@ -23,6 +23,7 @@ if (flutterVersionName == null) {
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.google.gms.google-services'
 
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
@@ -35,11 +36,12 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.example.crypto_watcher"
+        applicationId "com.krypto.cryptowatcher"
         minSdkVersion 16
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -59,4 +61,6 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation platform('com.google.firebase:firebase-bom:26.8.0')
     implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.firebaseui:firebase-ui-auth:6.4.0'
+    implementation 'com.android.support:multidex:1.0.3'
 }

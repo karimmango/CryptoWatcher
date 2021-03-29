@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1057546011048",
+    "project_id": "crypto-watcher-dcf28",
+    "storage_bucket": "crypto-watcher-dcf28.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1057546011048:android:76a0c5b1d151f4e6c29d9d",
+        "android_client_info": {
+          "package_name": "com.krypto.cryptowatcher"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1057546011048-nu7s6i96e9p6a1loj6vlkcnj918o8l4q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYfJKAWVR839pS3Tyitfz1gOv2pY3-kFg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1057546011048-nu7s6i96e9p6a1loj6vlkcnj918o8l4q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

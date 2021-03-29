@@ -1,21 +1,23 @@
+import 'dart:async';
+
+import 'package:crypto_watcher/crypto.dart';
+
 import 'package:crypto_watcher/application/coins/coinBloc.dart';
+import 'package:crypto_watcher/domain/portfolio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/all.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yeet/yeet.dart';
 
-import 'crypto.dart';
-
-class coin_info extends HookWidget {
-  String id;
-  coin_info(this.id);
+class owned_coins extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    final coinBloc = useProvider(coinBlocProvider);
+    final coinBloc = useProvider(ownedCoinBlocProvider);
     return Scaffold(
         appBar: AppBar(
-          title: Text(
-              'Crypto Watcher App                  Your Holdings: \$60,000'),
+          title: Text('Crypto Watcher App                  Your Holdings: ' +
+              coinBloc.portfolioValue().toString()),
         ),
         body: LayoutBuilder(
           builder: (context, constraints) {
@@ -28,8 +30,7 @@ class coin_info extends HookWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: 36),
-                    Text('here'),
-                    FeedWidget(this.id),
+                    FeedWidget(),
                   ],
                 ),
               ),
@@ -56,61 +57,40 @@ class coin_info extends HookWidget {
   }
 }
 
-class FeedWidget extends HookWidget {
-  final String id;
+const horizontalPadding = SizedBox(width: 16);
 
-  FeedWidget(this.id);
+class FeedWidget extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    final coinBloc = useProvider(coinBlocProvider);
-    final state = useProvider(coinBlocProvider.state);
-    final listOfCoins = state.coins.toList();
-    coinBloc.getCoinInfo(this.id);
+    final state = useProvider(ownedCoinBlocProvider.state);
+    final coinBloc = useProvider(ownedCoinBlocProvider);
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      SizedBox(height: 16),
       Text(
-        'Tasdfasdfsadfasdfsadfsadfsfaadafafdsfaafsd',
+        'Latest Price Action for Coins You Own',
         style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
       ),
-      Column(children: [CoinWidget(coin: state.info_coin)]),
+      SizedBox(height: 16),
+      if (state.coins.isEmpty)
+        CircularProgressIndicator()
+      else
+        Column(
+          children: state.coins.map((e) => CoinWidget(port: e)).toList(),
+        ),
     ]);
   }
 }
 
-const horizontalPadding = SizedBox(width: 16);
-
-// class CoinInfoWidget extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: [
-//         Text(
-//           'Bitcoin details',
-//           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-//         ),
-//         SizedBox(height: 16),
-//         CoinWidget(
-//           coin: state.info_coin,
-//         ),
-//         Text(
-//           'Bitcoin price chart',
-//           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-//         ),
-//         Image.asset('assets/images/bit.png'),
-//       ],
-//     );
-//   }
-// }
-
 class CoinWidget extends HookWidget {
-  final crypto coin;
+  final portfolio port;
 
   const CoinWidget({
-    required this.coin,
+    required this.port,
   });
 
   @override
   Widget build(BuildContext context) {
+    final state = useProvider(ownedCoinBlocProvider.state);
     return ConstrainedBox(
       constraints: BoxConstraints(maxWidth: 2000),
       child: Padding(
@@ -123,11 +103,11 @@ class CoinWidget extends HookWidget {
               child: Row(
                 children: [
                   horizontalPadding,
-                  Text(coin.name),
+                  Text(port.name.toString()),
                   Spacer(),
-                  Text('\$' + coin.price),
+                  Text('\$' + port.price.toString()),
                   Spacer(),
-                  Text(coin.symbol),
+                  Text('Your holdings worth: \$' + port.get_total().toString()),
                   horizontalPadding,
                 ],
               ),

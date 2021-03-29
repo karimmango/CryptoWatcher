@@ -12,6 +12,7 @@ _$_crypto _$_$_cryptoFromJson(Map<String, dynamic> json) {
     name: json['name'] as String,
     symbol: json['symbol'] as String,
     price: json['price'] as String,
+    circulating_supply: json['circulating_supply'] as String,
   );
 }
 
@@ -20,4 +21,5 @@ Map<String, dynamic> _$_$_cryptoToJson(_$_crypto instance) => <String, dynamic>{
       'name': instance.name,
       'symbol': instance.symbol,
       'price': instance.price,
+      'circulating_supply': instance.circulating_supply,
     };
