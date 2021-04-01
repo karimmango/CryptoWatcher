@@ -131,13 +131,13 @@ class _$_portfolio implements _portfolio {
   @override
   final String name;
 
-  double get_total() {
-    return double.parse(this.price) * double.parse(this.amount);
-  }
-
   @override
   String toString() {
     return 'portfolio(price: $price, amount: $amount, name: $name)';
+  }
+
+  double get_total() {
+    return double.parse(this.price) * double.parse(this.amount);
   }
 
   @override

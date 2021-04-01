@@ -20,7 +20,7 @@ class coin_service {
     String _apiURL =
         "https://api.nomics.com/v1/currencies/ticker?key=e825f16c7091cc7691064f37703f9fe3&ids=" +
             ids +
-            "&interval=1d,30d";
+            "&interval=1d";
     //print(_apiURL);
     http.Response response = await http.get(Uri.parse(_apiURL));
     // headers: {"X-CoinAPI-Key": "A25B2FFD-476C-4491-AB49-F4C9E08D983D"});

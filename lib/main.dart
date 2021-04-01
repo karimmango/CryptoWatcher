@@ -25,12 +25,24 @@ final yeetProvider = Provider<Yeet>((ref) {
   return authState.maybeWhen(
     authenticated: (user) => Yeet(
       children: [
-        Yeet(path: '/', builder: (_, __) => homepage(), children: [
-          Yeet(
-            path: '/info/:id([A-Z]{3})',
-            builder: (params, __) => coin_info(params['id']!),
-          ),
-        ]),
+        Yeet(
+          path: '/',
+          builder: (_, __) => homepage(),
+          children: [
+            Yeet.custom(
+              path: '/info/:id',
+              builder: (params, __) => coin_info(params['id']!),
+              opaque: false,
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                return FadeTransition(
+                  opacity: animation,
+                  child: child,
+                );
+              },
+            ),
+          ],
+        ),
         Yeet(path: '/portfolio', builder: (_, __) => owned_coins()),
       ],
     ),

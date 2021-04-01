@@ -10,46 +10,32 @@ import 'package:yeet/yeet.dart';
 class homepage extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    final ownedCoinBloc = useProvider(coinBlocProvider);
+    final coinBloc = useProvider(coinBlocProvider);
+    final state = useProvider(coinBlocProvider.state);
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Crypto Watcher App'),
-        ),
-        body: LayoutBuilder(
-          builder: (context, constraints) {
-            return SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20.0,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 36),
-                    FeedWidget(),
-                  ],
-                ),
+      appBar: AppBar(
+        title: Text('Crypto Watcher App'),
+        centerTitle: true,
+      ),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20.0,
               ),
-            );
-          },
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 20),
+                  FeedWidget(),
+                ],
+              ),
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.business),
-              label: 'Your Portfolio',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.school),
-              label: 'Charting and Analysis',
-            ),
-          ],
-          selectedItemColor: Colors.amber[800],
-        ));
+          );
+        },
+      ),
+    );
   }
 }
 
@@ -63,9 +49,12 @@ class FeedWidget extends HookWidget {
     final listOfCoins = state.coins.toList();
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       SizedBox(height: 16),
-      ElevatedButton(
-        onPressed: () => context.yeet('/portfolio'),
-        child: Text('to'),
+      Align(
+        alignment: Alignment.topRight,
+        child: ElevatedButton(
+          onPressed: () => context.yeet('/portfolio'),
+          child: Text('Your portfolio'),
+        ),
       ),
       Text(
         'Latest Price Action for Coins You are Tracking',

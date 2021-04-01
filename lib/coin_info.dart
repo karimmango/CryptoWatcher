@@ -1,5 +1,6 @@
 import 'package:crypto_watcher/application/coins/coinBloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/all.dart';
 import 'package:yeet/yeet.dart';
@@ -33,23 +34,6 @@ class coin_info extends HookWidget {
               ),
             );
           },
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.business),
-              label: 'Your Portfolio',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.school),
-              label: 'Charting and Analysis',
-            ),
-          ],
-          selectedItemColor: Colors.amber[800],
         ));
   }
 }
@@ -67,7 +51,11 @@ class FeedWidget extends HookWidget {
         'Details about the coin',
         style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
       ),
-      Column(children: [CoinWidget(coin: state.info_coin)]),
+      Column(children: [
+        CoinWidget(
+            coin: (state.coins as List<crypto>)
+                .firstWhere((element) => element.id == id))
+      ]),
     ]);
   }
 }
@@ -83,32 +71,31 @@ class CoinWidget extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: BoxConstraints(maxWidth: 2000),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10.0),
-        child: InkWell(
-          child: Card(
+    return Column(
+      children: [
+        Card(
             elevation: 5,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  horizontalPadding,
-                  Text(coin.name),
-                  Spacer(),
-                  Text('\$' + coin.price),
-                  Spacer(),
-                  Text(coin.symbol),
-                  Spacer(),
-                  Text(coin.circulating_supply),
-                  horizontalPadding,
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
+            child: new ListTile(title: Text("Coin name: " + coin.name))),
+        Card(
+            elevation: 5,
+            child: new ListTile(title: Text("Symbol: " + coin.symbol))),
+        Card(elevation: 5, child: new ListTile(title: Text('\$' + coin.price))),
+        Card(
+            elevation: 5,
+            child: new ListTile(
+                title: Text("1 day price change: \$" + coin.price_change))),
+        Card(
+            elevation: 5,
+            child: new ListTile(
+                title: Text("1 day change: %" + coin.price_change_pct))),
+        Card(
+            elevation: 5,
+            child: new ListTile(
+                title: Text("Circulating supply: " + coin.circulating_supply))),
+        Card(
+            elevation: 5,
+            child: new ListTile(title: Text("Market cap: " + coin.market_cap))),
+      ],
     );
   }
 }

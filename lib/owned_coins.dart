@@ -15,45 +15,33 @@ class owned_coins extends HookWidget {
   Widget build(BuildContext context) {
     final coinBloc = useProvider(ownedCoinBlocProvider);
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Crypto Watcher App                  Your Holdings: ' +
-              coinBloc.portfolioValue().toString()),
-        ),
-        body: LayoutBuilder(
-          builder: (context, constraints) {
-            return SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20.0,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 36),
-                    FeedWidget(),
-                  ],
-                ),
+      appBar: AppBar(
+        leading: ElevatedButton(
+            onPressed: () => context.yeet('/'),
+            child: Icon(Icons.arrow_back_ios_rounded)),
+        title: Text(
+            'Your portfolio value: \$' + coinBloc.portfolioValue().toString()),
+        centerTitle: true,
+      ),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20.0,
               ),
-            );
-          },
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 36),
+                  FeedWidget(),
+                ],
+              ),
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.business),
-              label: 'Your Portfolio',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.school),
-              label: 'Charting and Analysis',
-            ),
-          ],
-          selectedItemColor: Colors.amber[800],
-        ));
+          );
+        },
+      ),
+    );
   }
 }
 
@@ -72,16 +60,15 @@ class FeedWidget extends HookWidget {
       ),
       SizedBox(height: 16),
       TextField(
-        onChanged: (value) {
-          coinBloc.coinContentChanged(value);
-        },
-        decoration:
-            InputDecoration(hintText: 'Search for a coin by its symbol'),
+        decoration: InputDecoration(
+            hintText:
+                'Search for a coin by its symbol and separate the amount with a comma...(BTC, 3)'),
+        onChanged: (value) => coinBloc.ownedCoinContentChanged(value),
       ),
       IconButton(
           icon: Icon(Icons.send),
           onPressed: () {
-            coinBloc.addCoinButtonPressed(state.newCoin);
+            coinBloc.addOwnedCoinButtonPressed();
           }),
       if (state.coins.isEmpty)
         CircularProgressIndicator()

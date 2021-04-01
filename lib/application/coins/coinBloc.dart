@@ -15,11 +15,13 @@ class CoinBloc extends StateNotifier<CoinState> {
             info_coin: crypto(
               circulating_supply: '',
               id: '',
-              //logo_url: '',
+              market_cap: '',
               //max_supply: '',
               name: '',
               price: '',
               symbol: '',
+              price_change_pct: '',
+              price_change: '',
             ),
             portfolio_value: 0));
 
@@ -38,6 +40,10 @@ class CoinBloc extends StateNotifier<CoinState> {
     state = state.copyWith(newCoin: content);
   }
 
+  void ownedCoinContentChanged(String content) {
+    state = state.copyWith(newCoin: content);
+  }
+
   void portfolioValueChanged() async {
     // var x = await coin_repo.getPortfolioValue();
     // state = state.copyWith(portfolio_value: x);
@@ -46,6 +52,12 @@ class CoinBloc extends StateNotifier<CoinState> {
   void addCoinButtonPressed(String content) {
     state = state.copyWith(newCoin: content);
     coin_repo.coinTracked('Do1S8nVnMaefj9vS164Y', state.newCoin);
+  }
+
+  void addOwnedCoinButtonPressed() {
+    final content = state.newCoin.split(',');
+    print(content);
+    coin_repo.addCoinOwned('Do1S8nVnMaefj9vS164Y', content[0], content[1]);
   }
 
   void getCoinInfo(String ids) async {
@@ -71,7 +83,7 @@ final coinsStreamProvider = StreamProvider<List<crypto>>((ref) {
 //   return coinsRepo.watchAllOwnedCoins();
 // });
 
-final coinBlocProvider = StateNotifierProvider<CoinBloc>((ref) {
+final coinBlocProvider = StateNotifierProvider.autoDispose<CoinBloc>((ref) {
   final coinsRepo = ref.watch(coinRepoProvider);
   final coins = ref.watch(coinsStreamProvider);
   return coins.when(
@@ -87,7 +99,7 @@ final coinBlocProvider = StateNotifierProvider<CoinBloc>((ref) {
   );
 });
 
-final ownedCoinBlocProvider = StateNotifierProvider<CoinBloc>((ref) {
+final ownedCoinBlocProvider = AutoDisposeStateNotifierProvider<CoinBloc>((ref) {
   final coinsRepo = ref.watch(coinRepoProvider);
   final coins = ref.watch(ownedCoinsStreamProvider);
   return coins.when(
